@@ -34,9 +34,18 @@ grad = zeros(size(theta));
 %           temp = theta; 
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
-%
 
+h = sigmoid(X*theta);
 
+temp = [0 ; theta(2:end, :)];
+
+%regularized cost function
+J = ((-y' * log(h) - (1-y)' * log(1-h)) + ((lambda/2) * (temp' * temp))) / m ;
+
+%calculating gradient descent
+grad_unreg = (X' * (h - y))/m;
+
+grad = grad_unreg + (lambda/m) .* temp;
 
 
 
